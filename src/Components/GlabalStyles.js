@@ -9,6 +9,9 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     outline: none;
 }
+body {
+    overflow-x: hidden;
+}
 `;
 
 export default GlobalStyles;

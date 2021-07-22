@@ -20,7 +20,7 @@ const Goals = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 30vw;
+  width: 35vw;
   color: #000;
   font-family: "Patrick Hand", cursive;
   font-size: 1.3rem;
@@ -37,7 +37,7 @@ const Goals = styled.div`
     background-color: #d0fef5;
     border: 1px solid #0099ff4c;
     margin: 0.5rem 0;
-    width: 23vw;
+    width: 28vw;
   }
   button {
     width: 5vw;
@@ -49,6 +49,19 @@ const Goals = styled.div`
     background: none;
     font-size: 1.3rem;
     color: #ef394e;
+  }
+  @media screen and (max-width: 768px) {
+    width: 75vw;
+    h4 {
+      padding: 0.3rem 0.2rem;
+      width: 55vw;
+    }
+    button {
+      width: 17vw;
+      padding: 0.3rem 0.2rem;
+      margin: 0.5rem 0;
+      font-size: 1.3rem;
+    }
   }
 `;
 

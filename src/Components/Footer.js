@@ -6,7 +6,6 @@ import {
   faInstagram,
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
-// import { Link, Route } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -22,21 +21,19 @@ const Footer = () => {
           <FontAwesomeIcon icon={faLinkedinIn} size="2x" />
         </a>
       </div>
-
-      {/* <h2>a</h2>
-      <h2>b</h2>
-      <h2>c</h2> */}
     </FooterStyled>
   );
 };
 
 const FooterStyled = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
   min-height: 100vh;
   width: 5vw;
   background-color: #39a2db;
-  display: flex;
   div {
-    min-height: 80vh;
+    min-height: 100vh;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -48,8 +45,14 @@ const FooterStyled = styled.div`
       border-radius: 50%;
       &:hover {
         background-color: #a2dbfa;
-        color: #053742;
+        color: #ff0051;
       }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 10vw;
+    div a {
+      padding: 0.4rem;
     }
   }
 `;
