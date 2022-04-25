@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const Goal = ({ title, onDelete, onSelect, id }) => {
+const Goal = ({ title, onDelete, onSelect, id, status }) => {
   return (
     <div>
       <Goals>
         <div id={id} onClick={onSelect}>
-          <h4>{title}</h4>
+          <h4>
+            {title}-{status ? "true" : "false"}
+          </h4>
         </div>
         <button id={id} onClick={onDelete}>
           delete

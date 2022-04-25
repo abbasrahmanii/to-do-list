@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import uuid from "react-uuid";
 import Goal from "./Components/Goal";
 import styled from "styled-components";
@@ -8,13 +8,17 @@ import Footer from "./Components/Footer";
 function App() {
   const [inputText, setInputText] = useState("");
   const [textGoal, setTextGoal] = useState([]);
+  const [textGoal2, setTextGoal2] = useState([]);
 
   const inputHandler = (e) => {
     setInputText(e.target.value);
   };
   const addGoalHandler = () => {
     if (inputText) {
-      setTextGoal([...textGoal, { key: uuid(), value: inputText }]);
+      setTextGoal([
+        ...textGoal,
+        { key: uuid(), value: inputText, status: false },
+      ]);
       setInputText("");
     }
   };
@@ -27,29 +31,42 @@ function App() {
   const keyCodeHandler = (e) => {
     if (e.nativeEvent.keyCode === 13) {
       if (inputText) {
-        setTextGoal([...textGoal, { key: uuid(), value: inputText }]);
+        setTextGoal([
+          ...textGoal,
+          { key: uuid(), value: inputText, status: "unComplete" },
+        ]);
         setInputText("");
       }
     }
   };
-  const selectGoalHandler = (goal) => {
-    // console.log(goal);
-    if (goal.target.classList.value === "") {
-      goal.target.classList.add("selected");
-    } else {
-      goal.target.classList.remove("selected");
-    }
-  };
+  const selectGoalHandler = useCallback(
+    (e, goal) => {
+      if (e.target.classList.value === "") {
+        e.target.classList.add("selected");
+      } else {
+        e.target.classList.remove("selected");
+      }
+      const selectedGoal = textGoal.find((g) => g.id === goal.id);
+      setTextGoal(
+        textGoal.map((item) =>
+          item.id === goal.id
+            ? { ...selectedGoal, status: !selectedGoal.status }
+            : item
+        )
+      );
+    },
+    [textGoal, setTextGoal]
+  );
 
   const filterTodoHandler = (e) => {
-    // console.log(e.target.value);
-    // textGoal.forEach((todo) => {
-    //   console.log(todo);
-    // switch (e.target.value) {
-    //   case "All":
-    //     todo.style.display = "none";
-    // }
-    // });
+    if (e.target.value === "All") {
+      setTextGoal2(textGoal);
+    } else if (e.target.value === "Completed") {
+      setTextGoal2(textGoal.filter((item) => item.status === true));
+    } else if (e.target.value === "Uncompleted") {
+      setTextGoal2(textGoal.filter((item) => item.status === false));
+    }
+    console.log(textGoal2);
   };
 
   return (
@@ -68,11 +85,11 @@ function App() {
               value={inputText}
               onKeyPress={keyCodeHandler}
             />
-            <select onClick={filterTodoHandler} name="todos" id="todo-select">
+            {/* <select onChange={filterTodoHandler} name="todos" id="todo-select">
               <option value="All">All</option>
               <option value="Completed">Completed</option>
               <option value="Uncompleted">Uncompleted</option>
-            </select>
+            </select> */}
           </div>
           <div className="buttons">
             <button className="Add" onClick={addGoalHandler}>
@@ -91,7 +108,8 @@ function App() {
                 title={goal.value}
                 select={goal.select}
                 onDelete={deleteGoalHandler}
-                onSelect={selectGoalHandler}
+                onSelect={(e) => selectGoalHandler(e, goal)}
+                status={goal.status}
               />
             ))}
           </div>
@@ -140,12 +158,11 @@ const Main = styled.div`
   background: #003566;
   .todo-input {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 35vw;
     margin: 2rem 0rem 3rem 0rem;
     input {
-      width: 22vw;
+      width: 35vw;
       padding: 1rem 1.2rem;
       border-radius: 5px;
       font-family: "Patrick Hand", cursive;
@@ -161,9 +178,6 @@ const Main = styled.div`
       border-radius: 5px;
       font-family: "Patrick Hand", cursive;
       font-size: 1.2rem;
-      /* -webkit-appearance: none;
-      -moz-appearance: none; */
-      /* appearance: none; */
       outline: none;
       border: none;
     }
@@ -199,15 +213,15 @@ const Main = styled.div`
       width: 85%;
       margin: 1rem 0rem 2rem 0rem;
       input {
-        width: 55vw;
+        width: 85vw;
         padding: 0.8rem 1rem;
         font-size: 1rem;
       }
-      select {
+      /* select {
         width: 19vw;
         padding: 0.8rem 1rem;
         font-size: 1rem;
-      }
+      } */
     }
     .buttons {
       width: 85%;

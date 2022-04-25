@@ -11,10 +11,10 @@ const Footer = () => {
   return (
     <FooterStyled>
       <div>
-        <a href="https://telegram.me/AbbasRN">
+        <a href="https://telegram.me/Web_developer_98">
           <FontAwesomeIcon icon={faTelegram} size="2x" />
         </a>
-        <a href="https://instagram.com/abbasrahmani98">
+        <a href="https://instagram.com/abbasdotdev">
           <FontAwesomeIcon icon={faInstagram} size="2x" />
         </a>
         <a href="https://linkedin.com/in/abbas-rahmani-27123319a">
